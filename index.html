@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free AI Text Humanizer – Make AI Writing Sound Human (No Signup)</title>
+<meta name="description" content="Free AI text humanizer, paraphraser, grammar fixer and summarizer. Paste AI-written text and get a natural rewrite. Up to 3,000 words, no subscription.">
+<meta name="theme-color" content="#17795f">
+<meta property="og:title" content="Free AI Text Humanizer">
+<meta property="og:description" content="Make AI-written text sound natural. Free, no subscription.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317795f'/%3E%3Cpath d='M18 44V20h6v9h16v-9h6v24h-6v-10H24v10z' fill='%23fff'/%3E%3C/svg%3E">
+<!-- ADSENSE: after approval, paste your Auto ads script here (replace ca-pub-XXXX) -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+<script src="https://js.puter.com/v2/"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is this AI humanizer really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. There is no subscription and no word allowance. The site is supported by ads."}},
+{"@type":"Question","name":"Will it bypass AI detectors?","acceptedAnswer":{"@type":"Answer","text":"No tool can guarantee that. It makes text read more naturally, but you should always review and edit the result yourself."}},
+{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"Usually a few seconds. Long texts are processed in parts, so a 3,000 word document can take up to a minute."}},
+{"@type":"Question","name":"Do you store my text?","acceptedAnswer":{"@type":"Answer","text":"No. Your text is sent to an AI model to be rewritten. Your recent history is saved only in your own browser."}},
+{"@type":"Question","name":"What languages are supported?","acceptedAnswer":{"@type":"Answer","text":"English works best. Spanish, Portuguese, French and German also work. The result is written in the same language as your input."}}]}</script>
+<style>
+:root{--bg:#f4f6f5;--sf:#fff;--ink:#14201c;--mut:#5b6b65;--line:#d6dfdb;--ac:#17795f;--aci:#fff;--soft:#e4f1ec;--err:#c0392b}
+:root[data-theme=dark]{--bg:#0e1512;--sf:#16201c;--ink:#e6efeb;--mut:#92a39c;--line:#2a3a34;--ac:#4cc9a7;--aci:#0a1a15;--soft:#1b2c26;--err:#ff7b6b}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1512;--sf:#16201c;--ink:#e6efeb;--mut:#92a39c;--line:#2a3a34;--ac:#4cc9a7;--aci:#0a1a15;--soft:#1b2c26;--err:#ff7b6b}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--ac)}
+.w{max-width:1040px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--line);background:var(--sf);position:sticky;top:0;z-index:5}
+header .w{display:flex;align-items:center;gap:14px;height:56px}
+.logo{font:700 1.15rem Georgia,serif;margin-right:auto;color:var(--ink);text-decoration:none}
+header nav a{color:var(--mut);text-decoration:none;font-size:.92rem;margin-left:12px}
+header nav a:hover{color:var(--ac)}
+h1{font:700 clamp(1.9rem,5.5vw,3rem)/1.08 Georgia,"Times New Roman",serif;margin:28px 0 10px}
+h2{font:700 1.5rem/1.2 Georgia,serif;margin:0 0 12px}
+.sub{color:var(--mut);max-width:62ch;margin:0 0 20px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.tabs button{white-space:nowrap}
+button,select{font:inherit;border-radius:8px;border:1px solid var(--line);background:var(--sf);color:var(--ink);padding:9px 14px;cursor:pointer;transition:background .15s,border-color .15s}
+button:hover:not(:disabled){border-color:var(--ac)}
+button.on{background:var(--soft);border-color:var(--ac);color:var(--ac);font-weight:600}
+button.go{background:var(--ac);color:var(--aci);border-color:var(--ac);font-weight:700;padding:11px 24px}
+button.ghost{background:transparent}
+button:disabled{opacity:.55;cursor:not-allowed}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.opts{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;background:var(--sf);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:12px 0}
+.opts label{color:var(--mut);font-size:.85rem}
+.opts .grp{display:flex;align-items:center;gap:8px}
+.opts .grp.off{opacity:.4;pointer-events:none}
+.seg{display:flex}.seg button{border-radius:0;margin-left:-1px;padding:7px 12px}
+.seg button:first-child{border-radius:8px 0 0 8px;margin:0}.seg button:last-child{border-radius:0 8px 8px 0}
+.grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+.pane{background:var(--sf);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;min-height:340px;transition:border-color .15s}
+.pane.drag{border-color:var(--ac);background:var(--soft)}
+.pane h3{font-size:.9rem;margin:0 0 8px;color:var(--mut)}
+textarea{flex:1;min-height:240px;width:100%;border:0;background:transparent;color:var(--ink);font:inherit;resize:vertical;outline:none}
+#out{font-family:Georgia,serif;font-size:1.05rem}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.row button{padding:6px 11px;font-size:.88rem}
+.meta{color:var(--mut);font-size:.85rem;margin-right:auto}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chips span{background:var(--soft);border-radius:999px;padding:3px 12px;font-size:.85rem}
+.msg{color:var(--err);min-height:1.4em;margin:8px 0}
+#wait{display:none;background:var(--sf);border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0}
+.track{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:8px 0;position:relative}
+#bar{height:100%;width:0;background:var(--ac);transition:width .4s ease}
+.track.ind #bar{width:35%!important;animation:slide 1.1s ease-in-out infinite}
+@keyframes slide{0%{margin-left:-35%}100%{margin-left:100%}}
+.ad{margin:18px 0;min-height:100px;border-radius:8px;text-align:center}
+.ad::before{content:"Advertisement";display:block;font-size:.7rem;color:var(--mut)}
+section.blk{padding:34px 0;border-top:1px solid var(--line)}
+.steps,.feats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));padding:0;list-style:none;margin:0}
+.steps li,.feats li{background:var(--sf);border:1px solid var(--line);border-radius:10px;padding:14px}
+.steps b{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background:var(--ac);color:var(--aci);margin-right:6px}
+.hist div{display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding:6px 0;font-size:.9rem}
+.hist span{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--mut)}
+.hist button{padding:4px 10px;font-size:.82rem}
+.hh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.hh h2{margin:0}
+details{background:var(--sf);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+summary{cursor:pointer;font-weight:600}
+kbd{background:var(--soft);border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:.8em}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--mut);font-size:.88rem}
+footer a{margin-right:12px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.88rem;opacity:0;pointer-events:none;transition:.25s}
+#toast.show{opacity:1;transform:translateX(-50%)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="w">
+  <a class="logo" href="#top">HumanizeText</a>
+  <nav><a href="#how">How to use</a><a href="#faq">FAQ</a></nav>
+  <button id="theme" class="ghost" aria-label="Toggle dark mode">◐</button>
+</div></header>
+
+<main class="w" id="top">
+  <h1>Free AI Text Humanizer</h1>
+  <p class="sub">Paste writing from ChatGPT, Claude, Gemini or any AI tool and get a natural, human-sounding version. No subscription, no word allowance, up to 3,000 words per request.</p>
+
+  <div class="tabs" role="tablist" id="tabs" aria-label="Tool">
+    <button class="on" role="tab" aria-selected="true" data-m="humanize">AI Humanizer</button>
+    <button role="tab" aria-selected="false" data-m="paraphrase">Paraphraser</button>
+    <button role="tab" aria-selected="false" data-m="grammar">Grammar Fixer</button>
+    <button role="tab" aria-selected="false" data-m="summary">Summarizer</button>
+  </div>
+
+  <div class="opts">
+    <div class="grp" id="toneGrp">
+      <label for="tone">Style</label>
+      <select id="tone">
+        <option value="casual and conversational">Casual</option>
+        <option value="clear and professional but warm">Professional</option>
+        <option value="simple and easy to read, like a student wrote it">Student</option>
+        <option value="friendly and punchy, like a blog post">Blog</option>
+        <option value="formal and precise, suitable for academic writing">Academic</option>
+      </select>
+    </div>
+    <div class="grp" id="strGrp">
+      <label>Strength</label>
+      <div class="seg" id="strength">
+        <button data-s="light">Light</button><button data-s="medium" class="on">Medium</button><button data-s="strong">Strong</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <section class="pane" id="inPane">
+      <h3>Original text</h3>
+      <textarea id="in" placeholder="Paste or drop your text here…" aria-label="Original text"></textarea>
+      <div class="row">
+        <span class="meta" id="inCount">Words: 0 / 3,000</span>
+        <button id="sample">Sample</button><button id="paste">Paste</button>
+        <button id="upload">Upload .txt</button><button id="clear">Clear</button>
+        <input type="file" id="file" accept=".txt,.md,text/plain" hidden>
+      </div>
+    </section>
+    <section class="pane">
+      <h3>Result (editable)</h3>
+      <textarea id="out" placeholder="New text will appear here." aria-label="Result text" aria-live="polite"></textarea>
+      <div class="row">
+        <span class="meta" id="outCount">Result words: 0</span>
+        <button id="swap" title="Move the result into the input box">Use as input</button>
+        <button id="copy">Copy</button><button id="dl">Download</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="row" style="margin-top:14px">
+    <button class="go" id="go">Humanize AI</button>
+    <span class="meta" id="hint">Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to run. First use: a small Puter window may open. Allow it, then press the button again.</span>
+  </div>
+  <div class="msg" id="msg" role="alert"></div>
+  <div class="chips" id="chips"></div>
+
+  <div id="wait" aria-live="polite">
+    <strong id="waitTxt">Working on your text…</strong>
+    <div class="track ind" id="track"><div id="bar"></div></div>
+    <span class="meta" id="waitSub"></span>
+    <div class="ad"><!-- ADSENSE slot 1 --></div>
+  </div>
+
+  <div class="ad"><!-- ADSENSE slot 2 --></div>
+
+  <section class="blk" id="history" hidden>
+    <div class="hh"><h2>Recent results</h2><button id="clearHist" class="ghost">Clear history</button></div>
+    <div class="hist" id="hist"></div>
+  </section>
+
+  <section class="blk" id="how">
+    <h2>How to use the AI text humanizer</h2>
+    <ol class="steps">
+      <li><b>1</b><strong>Paste your text.</strong> Copy AI-written text into the left box, drop a .txt file on it, or tap Upload. Try the sample to see it work.</li>
+      <li><b>2</b><strong>Pick a tool.</strong> Humanizer for natural tone, Paraphraser to reword, Grammar Fixer to clean mistakes, Summarizer to shorten.</li>
+      <li><b>3</b><strong>Choose style and strength.</strong> Light keeps most of your wording. Strong rewrites heavily. Medium suits most text.</li>
+      <li><b>4</b><strong>Press the button.</strong> The first time, allow the small Puter window so the AI can run.</li>
+      <li><b>5</b><strong>Review, edit, copy or download.</strong> The result box is editable. Fix anything that changed your meaning, then use Copy or Download.</li>
+    </ol>
+    <h2 style="margin-top:26px">Tips for better results</h2>
+    <ul>
+      <li>Paste a full paragraph or more. Very short text has little to improve.</li>
+      <li>Add your own details, examples or opinions after humanizing. Real specifics are what make writing sound human.</li>
+      <li>Run Light first on text you like, and Strong on stiff or robotic text.</li>
+      <li>Not happy? Press the button again for a fresh version, or use "Use as input" to refine the result further.</li>
+      <li>Always proofread names, numbers and quotes.</li>
+    </ul>
+  </section>
+
+  <section class="blk">
+    <h2>Why people use it</h2>
+    <ul class="feats">
+      <li><strong>Natural rhythm.</strong> Mixes short and long sentences and drops stock AI phrases.</li>
+      <li><strong>Keeps your meaning.</strong> Facts, names and numbers stay the same.</li>
+      <li><strong>Handles long text.</strong> Big documents are processed in parts so quality stays consistent.</li>
+      <li><strong>Four tools in one.</strong> Humanize, paraphrase, fix grammar and summarize.</li>
+      <li><strong>Private by design.</strong> Nothing is saved on a server. History stays in your browser.</li>
+    </ul>
+  </section>
+
+  <section class="blk" id="faq">
+    <h2>Frequently asked questions</h2>
+    <details><summary>Is this AI humanizer really free?</summary><p>Yes. There is no subscription and no word allowance. The site is supported by ads.</p></details>
+    <details><summary>Will it bypass AI detectors?</summary><p>No tool can guarantee that. It makes text read more naturally, but you should always review and edit the result yourself. Many schools and sites ban undisclosed AI writing.</p></details>
+    <details><summary>How long does it take?</summary><p>Usually a few seconds. Long texts are processed in parts, so a 3,000 word document can take up to a minute.</p></details>
+    <details><summary>Do you store my text?</summary><p>No. Your text is sent to an AI model to be rewritten. Your recent history is saved only in your own browser.</p></details>
+    <details><summary>What languages are supported?</summary><p>English works best. Spanish, Portuguese, French and German also work. The result is written in the same language as your input.</p></details>
+  </section>
+
+  <section class="blk" id="about">
+    <h2>About</h2>
+    <p>HumanizeText is a free writing tool that helps you turn stiff, machine-sounding drafts into clear, natural text.</p>
+    <h2 id="privacy" style="margin-top:22px">Privacy Policy</h2>
+    <p>We do not require an account and do not store the text you submit. Text is sent to a third-party AI service (Puter) to generate the result. Recent results and your settings are saved in your browser's local storage and can be cleared in your browser settings or with the Clear history button. We use Google AdSense to show ads; Google and its partners may use cookies to serve ads based on your visits to this and other sites. You can manage ad personalization at adssettings.google.com. By using this site you agree to this policy.</p>
+  </section>
+</main>
+<footer><div class="w"><a href="#about">About</a><a href="#privacy">Privacy</a><br>Free and supported by ads. Results may contain mistakes, so review before use.</div></footer>
+<div id="toast" role="status"></div>
+
+<script>
+const MAX=3000, CHUNK=650, $=id=>document.getElementById(id);
+const words=s=>(s.trim().match(/\S+/g)||[]).length;
+const avgLen=s=>Math.round(words(s)/Math.max(1,s.split(/[.!?]+(\s|$)/).filter(x=>x&&x.trim()).length));
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+let mode='humanize', strength=LS.get('hs','medium'), busy=false;
+const SAMPLE="In today's fast-paced world, it is important to note that leveraging innovative solutions can significantly enhance productivity. Moreover, organizations must delve into the multifaceted landscape of modern technology in order to remain competitive. In conclusion, embracing change is essential for long-term success.";
+const LABEL={humanize:'Humanize AI',paraphrase:'Paraphrase text',grammar:'Fix grammar',summary:'Summarize'};
+const STR={light:'Make light edits only: keep most of the original wording and structure, and just swap stiff or robotic phrases.',medium:'Rewrite sentences where needed, vary the rhythm, and keep the overall structure.',strong:'Rewrite heavily in fresh wording and a different sentence structure while keeping every fact.'};
+const TIPS=['Tip: add a personal example after humanizing for the most natural result.','Tip: Light keeps your wording, Strong rewrites more.','Tip: always proofread names, numbers and quotes.','Tip: try the Grammar Fixer on your final draft.','Tip: the result box is editable.'];
+const KEEP=' Keep all names, numbers, dates, URLs, quoted text, code and formatting such as line breaks and bullet points exactly as they are.';
+const SAME=' Reply in the same language as the text. Return only the result, with no preface, notes or quotation marks around it.';
+
+function build(t,part){
+  const tone=$('tone').value, ctx=part&&part.n>1?' This is part '+part.i+' of '+part.n+' of a longer text, so do not add an introduction or a conclusion.':'';
+  if(mode==='grammar') return 'Fix grammar, spelling and punctuation in the text below. Do not change wording, tone or meaning beyond that.'+KEEP+ctx+SAME+'\n\nTEXT:\n'+t;
+  if(mode==='summary') return 'Summarize the text below clearly and accurately in about one quarter of its length. Tone: '+tone+'. Do not add facts that are not in the text.'+ctx+SAME+'\n\nTEXT:\n'+t;
+  const extra=mode==='humanize'
+    ?' Make it sound like a real person wrote it: mix short and long sentences, use plain everyday words, use contractions where natural, prefer concrete wording over abstract filler, avoid stock AI phrases such as "delve", "moreover", "furthermore", "in conclusion", "tapestry", "landscape", "navigate", "leverage", "it is important to note" and "in today\'s fast-paced world", do not start consecutive sentences the same way, avoid lists of exactly three items by habit, and do not use em dashes.'
+    :' Reword it so it says the same thing in different words.';
+  return 'Rewrite the text below. Tone: '+tone+'. '+STR[strength]+extra+' Keep the meaning and facts, and keep the length within about 10 percent of the original.'+KEEP+ctx+SAME+'\n\nTEXT:\n'+t;
+}
+function pick(r){
+  if(typeof r==='string') return r;
+  const c=r&&r.message&&r.message.content;
+  if(typeof c==='string') return c;
+  if(Array.isArray(c)) return c.map(x=>x.text||'').join('');
+  if(r&&r.text) return r.text;
+  throw new Error('The AI sent back an empty answer.');
+}
+function errText(e){
+  const m=(e&&(e.message||(e.error&&e.error.message)||(typeof e==='string'&&e)))||JSON.stringify(e)||'Unknown error';
+  if(/popup|auth|sign|login|token|401|403/i.test(m)) return 'Please allow the small Puter sign-in window (free account), then press the button again. If nothing opened, allow pop-ups for this site.';
+  return 'Could not reach the AI: '+m+'. Refresh, turn off ad blockers or VPN, and try again.';
+}
+const AUTH=/popup|auth|sign|login|401|403/i;
+async function ask(prompt){
+  if(typeof puter==='undefined') throw new Error('The AI service did not load (check ad blocker, VPN, or connection)');
+  let last;
+  for(const o of [{},{model:'gpt-4o-mini'}]){
+    try{ const r=(await pick(await puter.ai.chat(prompt,o))).trim(); if(r) return r; last=new Error('The AI sent back an empty answer.'); }
+    catch(e){ last=e; if(AUTH.test((e&&e.message)||'')) break; }
+  }
+  throw last;
+}
+function split(text){
+  const paras=text.split(/\n\s*\n/), parts=[]; let cur=[],n=0;
+  const push=()=>{if(cur.length){parts.push(cur.join('\n\n'));cur=[];n=0;}};
+  const add=(s,w)=>{if(n+w>CHUNK)push();cur.push(s);n+=w;};
+  for(const p of paras){
+    const w=words(p);
+    if(w<=CHUNK){add(p,w);continue;}
+    push();let buf=[],bw=0;
+    for(const s of p.match(/[^.!?]+[.!?]*\s*/g)||[p]){const sw=words(s);if(bw+sw>CHUNK&&buf.length){parts.push(buf.join('').trim());buf=[];bw=0;}buf.push(s);bw+=sw;}
+    if(buf.length)parts.push(buf.join('').trim());
+  }
+  push();return parts.filter(x=>x.trim());
+}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),1600);}
+
+function upd(){const n=words($('in').value);$('inCount').textContent='Words: '+n.toLocaleString()+' / 3,000';$('inCount').style.color=n>MAX?'var(--err)':'';LS.set('draft',$('in').value.slice(0,60000));}
+function updOut(){$('outCount').textContent='Result words: '+words($('out').value).toLocaleString();}
+$('in').addEventListener('input',upd);
+$('out').addEventListener('input',updOut);
+$('sample').onclick=()=>{$('in').value=SAMPLE;upd();};
+$('clear').onclick=()=>{$('in').value='';upd();$('in').focus();};
+$('paste').onclick=async()=>{try{$('in').value=await navigator.clipboard.readText();upd();}catch(e){$('msg').textContent='Your browser blocked the paste button. Press and hold in the box and choose Paste.';}};
+$('upload').onclick=()=>$('file').click();
+function readFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{$('in').value=String(r.result).slice(0,60000);upd();};r.readAsText(f);}
+$('file').onchange=e=>readFile(e.target.files[0]);
+const pane=$('inPane');
+['dragenter','dragover'].forEach(ev=>pane.addEventListener(ev,e=>{e.preventDefault();pane.classList.add('drag');}));
+['dragleave','drop'].forEach(ev=>pane.addEventListener(ev,e=>{e.preventDefault();pane.classList.remove('drag');}));
+pane.addEventListener('drop',e=>readFile(e.dataTransfer.files[0]));
+
+function setMode(m){
+  mode=m;LS.set('hm',m);
+  [...$('tabs').children].forEach(x=>{const on=x.dataset.m===m;x.classList.toggle('on',on);x.setAttribute('aria-selected',on);});
+  if(!busy)$('go').textContent=LABEL[m];
+  $('strGrp').classList.toggle('off',!(m==='humanize'||m==='paraphrase'));
+  $('toneGrp').classList.toggle('off',m==='grammar');
+}
+$('tabs').onclick=e=>{const b=e.target.closest('button');if(b)setMode(b.dataset.m);};
+function setStrength(s){strength=s;LS.set('hs',s);[...$('strength').children].forEach(x=>x.classList.toggle('on',x.dataset.s===s));}
+$('strength').onclick=e=>{const b=e.target.closest('button');if(b)setStrength(b.dataset.s);};
+$('tone').onchange=()=>LS.set('ht',$('tone').value);
+function setTheme(t){document.documentElement.dataset.theme=t;LS.set('theme',t);}
+$('theme').onclick=()=>{const d=document.documentElement.dataset.theme;const dark=d?d==='dark':matchMedia('(prefers-color-scheme:dark)').matches;setTheme(dark?'light':'dark');};
+
+function saveHist(i,o){const h=LS.get('hh',[]);h.unshift({m:mode,i:i.slice(0,6000),o:o.slice(0,6000)});LS.set('hh',h.slice(0,8));renderHist();}
+function renderHist(){const h=LS.get('hh',[]);
+  $('history').hidden=!h.length;$('hist').innerHTML='';
+  h.forEach(x=>{const d=document.createElement('div'),s=document.createElement('span'),b=document.createElement('button');s.textContent=x.m+': '+x.o;b.textContent='Restore';b.onclick=()=>{$('in').value=x.i;$('out').value=x.o;upd();updOut();scrollTo({top:0,behavior:'smooth'});};d.append(s,b);$('hist').append(d);});}
+$('clearHist').onclick=()=>{LS.set('hh',[]);renderHist();toast('History cleared');};
+
+async function run(){
+  if(busy)return;
+  const t=$('in').value.trim();$('msg').textContent='';$('chips').innerHTML='';
+  if(words(t)<8){$('msg').textContent='Paste at least a couple of sentences.';return;}
+  if(words(t)>MAX){$('msg').textContent='Please keep it under 3,000 words.';return;}
+  busy=true;$('go').disabled=true;$('go').textContent='Working…';$('wait').style.display='block';
+  const track=$('track'),bar=$('bar');track.classList.add('ind');bar.style.width='0%';
+  const t0=Date.now();let k=0;$('waitTxt').textContent=TIPS[0];
+  const tm=setInterval(()=>{const e=Date.now()-t0;$('waitSub').textContent=Math.floor(e/1000)+'s';if(Math.floor(e/5000)!==k){k=Math.floor(e/5000);$('waitTxt').textContent=TIPS[k%TIPS.length];}},500);
+  let ok=false;
+  try{
+    const parts=split(t),n=parts.length,res=[];
+    for(let i=0;i<n;i++){
+      if(n>1){track.classList.remove('ind');bar.style.width=(i/n*100)+'%';$('waitTxt').textContent='Processing part '+(i+1)+' of '+n+'…';}
+      // first call starts inside the click handler so the sign-in popup is allowed
+      res.push(await ask(build(parts[i],{i:i+1,n})));
+    }
+    let out=res.join('\n\n');
+    if(mode==='summary'&&n>1){track.classList.add('ind');$('waitTxt').textContent='Combining summaries…';out=await ask('Combine these partial summaries into one short, coherent summary. Remove repetition.'+SAME+'\n\nTEXT:\n'+out);}
+    $('out').value=out;bar.style.width='100%';updOut();
+    $('chips').innerHTML='<span>Words: '+words(t)+' → '+words(out)+'</span><span>Avg sentence: '+avgLen(t)+' → '+avgLen(out)+' words</span><span>Reading time: ~'+Math.max(1,Math.round(words(out)/220))+' min</span>';
+    saveHist(t,out);ok=true;
+    if(innerWidth<=720)$('out').scrollIntoView({behavior:'smooth',block:'center'});
+  }catch(e){$('msg').textContent=errText(e);console.error(e);}
+  finally{clearInterval(tm);busy=false;$('go').disabled=false;$('go').textContent=ok?'Rewrite again':LABEL[mode];setTimeout(()=>{$('wait').style.display='none';},400);}
+}
+$('go').onclick=run;
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run();}});
+
+$('swap').onclick=()=>{const v=$('out').value.trim();if(!v)return;$('in').value=v;$('out').value='';upd();updOut();$('in').focus();toast('Moved to input');};
+$('copy').onclick=async()=>{const v=$('out').value;if(!v)return;try{await navigator.clipboard.writeText(v);toast('Copied');}catch(e){$('out').select();toast('Press Ctrl+C to copy');}};
+$('dl').onclick=()=>{const v=$('out').value;if(!v)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([v],{type:'text/plain'}));a.download='result.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+
+(function init(){
+  const th=LS.get('theme',null);if(th)document.documentElement.dataset.theme=th;
+  $('tone').value=LS.get('ht',$('tone').options[0].value);
+  setStrength(strength);setMode(LS.get('hm','humanize'));
+  $('in').value=LS.get('draft','');upd();renderHist();
+})();
+</script>
+</body>
+</html>
